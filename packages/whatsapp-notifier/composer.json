@@ -3,6 +3,17 @@
     "description": "WhatsApp Cloud API Wrapper for Laravel/PHP",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/Premod1/nml-whatsapp-notifier",
+    "authors": [
+        {
+            "name": "Premod Suraweera",
+            "email": "premodsuraweera1@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Premod1/nml-whatsapp-notifier/issues",
+        "source": "https://github.com/Premod1/nml-whatsapp-notifier"
+    },
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",

@@ -4,6 +4,8 @@ NML WhatsApp Notifier is an enterprise-ready PHP and Laravel package designed fo
 
 Package Name: `nml/whatsapp-notifier`
 PSR-4 Namespace: `Nml\WhatsApp\`
+Repository: `https://github.com/Premod1/nml-whatsapp-notifier`
+Author Email: `premodsuraweera1@gmail.com`
 
 ---
 
@@ -24,7 +26,8 @@ PSR-4 Namespace: `Nml\WhatsApp\`
 9. Artisan Command Interface
 10. Automated Unit and Feature Testing
 11. Meta Cloud API Setup and Authorization
-12. Error Handling and Troubleshooting
+12. Publishing to Packagist Guide
+13. Error Handling and Troubleshooting
 
 ---
 
@@ -56,7 +59,13 @@ NML WhatsApp Notifier provides a clean abstraction over Meta's Graph API. It han
 
 ## 4. Installation and Setup
 
-### Step 1: Add Local Repository Path
+### Option A: Installation via Composer (Once Published to Packagist)
+
+```bash
+composer require nml/whatsapp-notifier
+```
+
+### Option B: Local Repository Installation (Development Mode)
 
 Include the local package path in your root `composer.json`:
 
@@ -72,15 +81,13 @@ Include the local package path in your root `composer.json`:
 }
 ```
 
-### Step 2: Install via Composer
-
-Execute the composer update command:
+Execute composer update:
 
 ```bash
 composer update nml/whatsapp-notifier
 ```
 
-### Step 3: Publish Configuration File
+### Publish Configuration File
 
 Publish the configuration file to `config/whatsapp.php`:
 
@@ -169,17 +176,6 @@ Class: `Nml\WhatsApp\Messages\WhatsAppTextMessage`
 - `public function previewUrl(bool $previewUrl = true): static`
 - `public function toArray(string $to): array`
 
-#### Example Usage
-
-```php
-use Nml\WhatsApp\Messages\WhatsAppTextMessage;
-
-$message = WhatsAppTextMessage::create('Welcome to our service!')
-    ->previewUrl(true);
-
-$payload = $message->toArray('94771234567');
-```
-
 ---
 
 ### WhatsAppTemplateMessage Builder
@@ -195,18 +191,6 @@ Class: `Nml\WhatsApp\Messages\WhatsAppTemplateMessage`
 - `public function components(array $components): static`
 - `public function addComponent(array $component): static`
 - `public function toArray(string $to): array`
-
-#### Example Usage
-
-```php
-use Nml\WhatsApp\Messages\WhatsAppTemplateMessage;
-
-$message = WhatsAppTemplateMessage::create('jaspers_market_order_confirmation_v1')
-    ->language('en_US')
-    ->bodyParameters(['John Doe', 'ORD-9921', 'Sep 2, 2026']);
-
-$payload = $message->toArray('94771234567');
-```
 
 ---
 
@@ -273,28 +257,16 @@ $user->notify(new OrderConfirmedNotification());
 
 Command Signature: `whatsapp:test`
 
-### Options and Arguments
+### Examples
 
-- `phone` (Argument): Target recipient phone number with country code.
-- `--type` (Option): Message type (`template` or `text`). Default: `template`.
-- `--template` (Option): Meta template name. Default: `hello_world`.
-- `--params` (Option): Comma-separated list of body parameters.
-- `--lang` (Option): Template language code. Default: `en_US`.
-
-### Command Examples
-
-#### Test Default Hello World Template
 ```bash
+# Default Hello World Template
 php artisan whatsapp:test 94771234567
-```
 
-#### Test Text Message
-```bash
+# Text Message
 php artisan whatsapp:test 94771234567 --type=text
-```
 
-#### Test Order Confirmation Template
-```bash
+# Order Confirmation Template
 php artisan whatsapp:test 94764686371 --template=jaspers_market_order_confirmation_v1 --params="John Doe, 123456, Sep 2 2026"
 ```
 
@@ -302,18 +274,8 @@ php artisan whatsapp:test 94764686371 --template=jaspers_market_order_confirmati
 
 ## 10. Automated Unit and Feature Testing
 
-The package includes PHPUnit test cases in `tests/Unit/WhatsAppPackageTest.php`.
-
-### Running Tests
-
-Run full test suite:
 ```bash
 php artisan test
-```
-
-Run specific package tests:
-```bash
-./vendor/bin/phpunit tests/Unit/WhatsAppPackageTest.php
 ```
 
 ---
@@ -328,28 +290,45 @@ Run specific package tests:
 
 ---
 
-## 12. Error Handling and Troubleshooting
+## 12. Publishing to Packagist Guide
+
+### Step 1: Configure composer.json
+Package composer file (`packages/whatsapp-notifier/composer.json`) configured with:
+- Name: `nml/whatsapp-notifier`
+- Repository: `https://github.com/Premod1/nml-whatsapp-notifier`
+- Author Email: `premodsuraweera1@gmail.com`
+
+### Step 2: Push Package to GitHub
+```bash
+git init
+git add .
+git commit -m "Initial release of NML WhatsApp Notifier"
+git branch -M main
+git remote add origin https://github.com/Premod1/nml-whatsapp-notifier.git
+git push -u origin main
+```
+
+### Step 3: Tag Release Version
+```bash
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+```
+
+### Step 4: Submit to Packagist
+1. Log in to [packagist.org](https://packagist.org/).
+2. Click **Submit**.
+3. Paste repository URL: `https://github.com/Premod1/nml-whatsapp-notifier`.
+4. Click **Submit**.
+
+---
+
+## 13. Error Handling and Troubleshooting
 
 ### Error Code 131030: Recipient phone number not in allowed list
-
-#### Diagnosis
-Meta Test Phone Numbers restrict outgoing messages to explicit recipient numbers added to the developer account list.
-
-#### Solution
 Open Meta Developer Console -> WhatsApp -> API Setup -> To Dropdown -> Manage phone number list. Add target phone number and verify with 6-digit OTP code.
 
 ### Error Code 190: Invalid OAuth Access Token
-
-#### Diagnosis
-Access token has expired or lacks proper WhatsApp business permissions.
-
-#### Solution
 Generate a new token or configure a Meta System User token with `whatsapp_business_messaging` permission.
 
 ### Error Code 100: Parameter Value Not Valid
-
-#### Diagnosis
-Mismatched body parameter count or incorrect template name.
-
-#### Solution
 Verify template variable count matches parameter array elements passed in `bodyParameters()`.
