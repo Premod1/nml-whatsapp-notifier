@@ -1,6 +1,6 @@
-# WhatsApp Notifier Package for Laravel
+# WhatsApp Notifier Package for Laravel (nml/whatsapp-notifier)
 
-WhatsApp Notifier is a reusable Laravel package for sending transactional and template messages via Meta Cloud API.
+NML WhatsApp Notifier is a reusable Laravel package for sending transactional and template messages via Meta Cloud API.
 
 ## Package Architecture
 
@@ -34,14 +34,14 @@ Add the package dependency to your main application `composer.json`:
     }
 ],
 "require": {
-    "your-company/whatsapp-notifier": "@dev"
+    "nml/whatsapp-notifier": "@dev"
 }
 ```
 
 Run composer update and publish configuration:
 
 ```bash
-composer update your-company/whatsapp-notifier
+composer update nml/whatsapp-notifier
 php artisan vendor:publish --tag=whatsapp-config
 ```
 
@@ -60,7 +60,7 @@ WHATSAPP_API_VERSION=v20.0
 ### Direct API Usage
 
 ```php
-use YourCompany\WhatsApp\WhatsAppClient;
+use Nml\WhatsApp\WhatsAppClient;
 
 $wa = app(WhatsAppClient::class);
 
@@ -79,8 +79,8 @@ $wa->sendTemplate(
 
 ```php
 use Illuminate\Notifications\Notification;
-use YourCompany\WhatsApp\Channels\WhatsAppChannel;
-use YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage;
+use Nml\WhatsApp\Channels\WhatsAppChannel;
+use Nml\WhatsApp\Messages\WhatsAppTemplateMessage;
 
 class OrderNotification extends Notification
 {

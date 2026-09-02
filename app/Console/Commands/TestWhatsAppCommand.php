@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use YourCompany\WhatsApp\WhatsAppClient;
-use YourCompany\WhatsApp\Exceptions\WhatsAppApiException;
+use Nml\WhatsApp\WhatsAppClient;
+use Nml\WhatsApp\Exceptions\WhatsAppApiException;
 
 class TestWhatsAppCommand extends Command
 {

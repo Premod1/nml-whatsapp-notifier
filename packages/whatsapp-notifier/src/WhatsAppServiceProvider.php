@@ -1,6 +1,6 @@
 <?php
 
-namespace YourCompany\WhatsApp;
+namespace Nml\WhatsApp;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace YourCompany\WhatsApp\Channels;
+namespace Nml\WhatsApp\Channels;
 
 use Illuminate\Notifications\Notification;
-use YourCompany\WhatsApp\WhatsAppClient;
-use YourCompany\WhatsApp\Messages\WhatsAppTextMessage;
-use YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage;
+use Nml\WhatsApp\WhatsAppClient;
+use Nml\WhatsApp\Messages\WhatsAppTextMessage;
+use Nml\WhatsApp\Messages\WhatsAppTemplateMessage;
 
 class WhatsAppChannel
 {

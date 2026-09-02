@@ -1,5 +1,5 @@
 {
-    "name": "your-company/whatsapp-notifier",
+    "name": "nml/whatsapp-notifier",
     "description": "WhatsApp Cloud API Wrapper for Laravel/PHP",
     "type": "library",
     "license": "MIT",
@@ -10,13 +10,13 @@
     },
     "autoload": {
         "psr-4": {
-            "YourCompany\\WhatsApp\\": "src/"
+            "Nml\\WhatsApp\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "YourCompany\\WhatsApp\\WhatsAppServiceProvider"
+                "Nml\\WhatsApp\\WhatsAppServiceProvider"
             ]
         }
     }

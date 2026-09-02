@@ -2,6 +2,11 @@
 
 NML WhatsApp Notifier is an enterprise-ready PHP and Laravel package designed for sending transactional and marketing WhatsApp messages using Meta's WhatsApp Cloud API.
 
+Package Name: `nml/whatsapp-notifier`
+PSR-4 Namespace: `Nml\WhatsApp\`
+
+---
+
 ## Table of Contents
 
 1. Overview
@@ -31,13 +36,12 @@ NML WhatsApp Notifier provides a clean abstraction over Meta's Graph API. It han
 
 ## 2. Features
 
-- Direct REST Client: Thin Guzzle HTTP wrapper targeting Meta Graph API endpoints.
-- Template Messaging: Support for Meta approved templates with body parameters and language codes.
-- Text Messaging: Support for plain text messaging with link previews.
-- Native Notification Channel: Integrated driver for `Illuminate\Notifications\Notification`.
-- Fluent Builders: Fluent builder interfaces for constructing structured message payloads.
+- Meta WhatsApp Cloud API Integration: Native integration with Graph API v20.0+.
+- Dual Messaging Modes: Supports sending both plain text messages and dynamic template messages.
+- Native Laravel Notification Channel: Integrated driver for `Illuminate\Notifications\Notification`.
+- Fluent Message Builders: Clean fluent API for building text (`WhatsAppTextMessage`) and template (`WhatsAppTemplateMessage`) payloads.
 - Console Test CLI: Custom Artisan command for sending text and template messages.
-- Error Handling: Specialized exception handling for Graph API HTTP errors.
+- Fully Tested: Includes unit test suites for container binding, payload formatting, and notification dispatching.
 
 ---
 
@@ -64,7 +68,7 @@ Include the local package path in your root `composer.json`:
     }
 ],
 "require": {
-    "your-company/whatsapp-notifier": "@dev"
+    "nml/whatsapp-notifier": "@dev"
 }
 ```
 
@@ -73,7 +77,7 @@ Include the local package path in your root `composer.json`:
 Execute the composer update command:
 
 ```bash
-composer update your-company/whatsapp-notifier
+composer update nml/whatsapp-notifier
 ```
 
 ### Step 3: Publish Configuration File
@@ -126,7 +130,7 @@ packages/whatsapp-notifier/
 
 ### Service Provider Registration
 
-`WhatsAppServiceProvider` automatically registers `WhatsAppClient` as a singleton in the Laravel Service Container and merges default config settings from `config/whatsapp.php`.
+`WhatsAppServiceProvider` automatically registers `WhatsAppClient` as a singleton in the Laravel Service Container under namespace `Nml\WhatsApp\WhatsAppClient` and merges default config settings from `config/whatsapp.php`.
 
 ---
 
@@ -134,7 +138,7 @@ packages/whatsapp-notifier/
 
 ### WhatsAppClient
 
-Class: `YourCompany\WhatsApp\WhatsAppClient`
+Class: `Nml\WhatsApp\WhatsAppClient`
 
 #### Constructor
 ```php
@@ -156,7 +160,7 @@ Sends a template message with optional components and parameters.
 
 ### WhatsAppTextMessage Builder
 
-Class: `YourCompany\WhatsApp\Messages\WhatsAppTextMessage`
+Class: `Nml\WhatsApp\Messages\WhatsAppTextMessage`
 
 #### Methods
 
@@ -168,7 +172,7 @@ Class: `YourCompany\WhatsApp\Messages\WhatsAppTextMessage`
 #### Example Usage
 
 ```php
-use YourCompany\WhatsApp\Messages\WhatsAppTextMessage;
+use Nml\WhatsApp\Messages\WhatsAppTextMessage;
 
 $message = WhatsAppTextMessage::create('Welcome to our service!')
     ->previewUrl(true);
@@ -180,7 +184,7 @@ $payload = $message->toArray('94771234567');
 
 ### WhatsAppTemplateMessage Builder
 
-Class: `YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage`
+Class: `Nml\WhatsApp\Messages\WhatsAppTemplateMessage`
 
 #### Methods
 
@@ -195,7 +199,7 @@ Class: `YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage`
 #### Example Usage
 
 ```php
-use YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage;
+use Nml\WhatsApp\Messages\WhatsAppTemplateMessage;
 
 $message = WhatsAppTemplateMessage::create('jaspers_market_order_confirmation_v1')
     ->language('en_US')
@@ -214,8 +218,8 @@ $payload = $message->toArray('94771234567');
 namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
-use YourCompany\WhatsApp\Channels\WhatsAppChannel;
-use YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage;
+use Nml\WhatsApp\Channels\WhatsAppChannel;
+use Nml\WhatsApp\Messages\WhatsAppTemplateMessage;
 
 class OrderConfirmedNotification extends Notification
 {

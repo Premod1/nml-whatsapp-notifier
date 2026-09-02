@@ -1,12 +1,12 @@
 <?php
 
-namespace YourCompany\WhatsApp;
+namespace Nml\WhatsApp;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use YourCompany\WhatsApp\Exceptions\WhatsAppApiException;
-use YourCompany\WhatsApp\Messages\WhatsAppTextMessage;
-use YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage;
+use Nml\WhatsApp\Exceptions\WhatsAppApiException;
+use Nml\WhatsApp\Messages\WhatsAppTextMessage;
+use Nml\WhatsApp\Messages\WhatsAppTemplateMessage;
 
 class WhatsAppClient
 {

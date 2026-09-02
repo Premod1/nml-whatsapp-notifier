@@ -1,6 +1,6 @@
 <?php
 
-namespace YourCompany\WhatsApp\Messages;
+namespace Nml\WhatsApp\Messages;
 
 class WhatsAppTextMessage
 {

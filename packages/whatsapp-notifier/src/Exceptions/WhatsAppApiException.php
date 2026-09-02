@@ -1,6 +1,6 @@
 <?php
 
-namespace YourCompany\WhatsApp\Exceptions;
+namespace Nml\WhatsApp\Exceptions;
 
 use Exception;
 

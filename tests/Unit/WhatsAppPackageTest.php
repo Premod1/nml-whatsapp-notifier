@@ -3,10 +3,10 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use YourCompany\WhatsApp\WhatsAppClient;
-use YourCompany\WhatsApp\Channels\WhatsAppChannel;
-use YourCompany\WhatsApp\Messages\WhatsAppTextMessage;
-use YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage;
+use Nml\WhatsApp\WhatsAppClient;
+use Nml\WhatsApp\Channels\WhatsAppChannel;
+use Nml\WhatsApp\Messages\WhatsAppTextMessage;
+use Nml\WhatsApp\Messages\WhatsAppTemplateMessage;
 use Illuminate\Notifications\Notification;
 
 class WhatsAppPackageTest extends TestCase
