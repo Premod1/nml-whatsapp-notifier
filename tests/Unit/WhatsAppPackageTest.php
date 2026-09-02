@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit;
+namespace Nml\WhatsApp\Tests;
 
-use Tests\TestCase;
+use Nml\WhatsApp\Tests\TestCase;
 use Nml\WhatsApp\WhatsAppClient;
 use Nml\WhatsApp\Channels\WhatsAppChannel;
 use Nml\WhatsApp\Messages\WhatsAppTextMessage;

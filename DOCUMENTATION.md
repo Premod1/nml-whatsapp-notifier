@@ -118,7 +118,7 @@ WHATSAPP_API_VERSION=v20.0
 ## 6. Package Architecture
 
 ```text
-packages/whatsapp-notifier/
+nml-whatsapp-notifier/
 ├── config/
 │   └── whatsapp.php
 ├── src/
@@ -131,8 +131,14 @@ packages/whatsapp-notifier/
 │   │   └── WhatsAppTemplateMessage.php
 │   └── Exceptions/
 │       └── WhatsAppApiException.php
+├── tests/
+│   ├── TestCase.php
+│   └── Unit/
+│       └── WhatsAppPackageTest.php
 ├── composer.json
-└── README.md
+├── phpunit.xml
+├── README.md
+└── DOCUMENTATION.md
 ```
 
 ### Service Provider Registration

@@ -1,6 +1,11 @@
 # NML WhatsApp Notifier
 
-NML WhatsApp Notifier is a lightweight, flexible PHP and Laravel package designed for sending WhatsApp messages via Meta Cloud API. It provides a direct client for sending plain text and template messages, as well as a native Laravel Notification Channel for seamless application integration.
+NML WhatsApp Notifier is a lightweight, standalone PHP and Laravel package designed for sending WhatsApp messages via Meta Cloud API. It provides a direct client for sending plain text and template messages, as well as a native Laravel Notification Channel for seamless application integration.
+
+- Package Name: `nml/whatsapp-notifier`
+- Namespace: `Nml\WhatsApp\`
+- GitHub Repository: `https://github.com/Premod1/nml-whatsapp-notifier`
+- Author Email: `premodsuraweera1@gmail.com`
 
 ## Features
 
@@ -8,27 +13,60 @@ NML WhatsApp Notifier is a lightweight, flexible PHP and Laravel package designe
 - Dual Messaging Modes: Supports sending both plain text messages and dynamic template messages.
 - Native Laravel Notification Channel: Integrates directly into Laravel's notification system.
 - Fluent Message Builders: Clean fluent API for building text (`WhatsAppTextMessage`) and template (`WhatsAppTemplateMessage`) payloads.
-- Console Test Command: Artisan CLI command (`whatsapp:test`) for rapid testing and debugging.
-- Fully Tested: Includes unit test suites for container binding, payload formatting, and notification dispatching.
+- Fully Tested: Includes unit test suites using Orchestra Testbench.
+
+## Package Architecture
+
+```text
+nml-whatsapp-notifier/
+├── config/
+│   └── whatsapp.php
+├── src/
+│   ├── WhatsAppServiceProvider.php
+│   ├── WhatsAppClient.php
+│   ├── Channels/
+│   │   └── WhatsAppChannel.php
+│   ├── Messages/
+│   │   ├── WhatsAppTextMessage.php
+│   │   └── WhatsAppTemplateMessage.php
+│   └── Exceptions/
+│       └── WhatsAppApiException.php
+├── tests/
+│   ├── TestCase.php
+│   └── Unit/
+│       └── WhatsAppPackageTest.php
+├── composer.json
+├── phpunit.xml
+├── README.md
+└── DOCUMENTATION.md
+```
 
 ## Requirements
 
 - PHP 8.2 or higher
-- Laravel 10.x or 11.x
+- Laravel 10.x, 11.x, or 12.x
 - GuzzleHTTP 7.x
 - Meta Developer Account with WhatsApp Cloud API enabled
 
 ## Installation
 
-### 1. Register Local Repository
+### Option 1: Via Composer (Recommended)
 
-In your application's `composer.json`, add the package repository:
+Once published to Packagist, run:
+
+```bash
+composer require nml/whatsapp-notifier
+```
+
+### Option 2: Via Local Path (Development)
+
+Add the local repository path to your application's `composer.json`:
 
 ```json
 "repositories": [
     {
         "type": "path",
-        "url": "packages/whatsapp-notifier"
+        "url": "../nml-whatsapp-notifier"
     }
 ],
 "require": {
@@ -42,9 +80,9 @@ Then run composer update:
 composer update nml/whatsapp-notifier
 ```
 
-### 2. Publish Configuration
+### Publish Configuration
 
-Publish the package configuration file to `config/whatsapp.php`:
+Publish the package configuration file to your Laravel app:
 
 ```bash
 php artisan vendor:publish --tag=whatsapp-config
@@ -52,7 +90,7 @@ php artisan vendor:publish --tag=whatsapp-config
 
 ## Environment Configuration
 
-Configure the required environment variables in your `.env` file:
+Configure the required environment variables in your application `.env` file:
 
 ```env
 WHATSAPP_ACCESS_TOKEN=your_meta_access_token_here
@@ -170,41 +208,33 @@ Dispatch the notification:
 $user->notify(new OrderShippedNotification());
 ```
 
-## CLI Test Command
-
-The package includes an Artisan command to send test messages directly from your terminal.
-
-### Send Default Template (hello_world)
-
-```bash
-php artisan whatsapp:test 94771234567
-```
-
-### Send Text Message
-
-```bash
-php artisan whatsapp:test 94771234567 --type=text
-```
-
-### Send Custom Template with Parameters
-
-```bash
-php artisan whatsapp:test 94771234567 --template=jaspers_market_order_confirmation_v1 --params="John Doe, 123456, Sep 2 2026"
-```
-
 ## Testing
 
 Run unit tests via PHPUnit:
 
 ```bash
-php artisan test
+vendor/bin/phpunit
 ```
 
-Or run package specific tests directly:
+## Publishing to Packagist
 
+1. Push code to GitHub:
 ```bash
-./vendor/bin/phpunit tests/Unit/WhatsAppPackageTest.php
+git init
+git add .
+git commit -m "Initial release of NML WhatsApp Notifier"
+git branch -M main
+git remote add origin https://github.com/Premod1/nml-whatsapp-notifier.git
+git push -u origin main
 ```
+
+2. Tag version release:
+```bash
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+```
+
+3. Submit `https://github.com/Premod1/nml-whatsapp-notifier` on [Packagist.org](https://packagist.org/).
 
 ## Troubleshooting
 
