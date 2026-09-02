@@ -1,8 +1,8 @@
-# WhatsApp Notifier for Laravel / PHP
+# WhatsApp Notifier Package for Laravel
 
-A lightweight Laravel/PHP wrapper package for sending WhatsApp messages using Meta's Cloud API.
+WhatsApp Notifier is a reusable Laravel package for sending transactional and template messages via Meta Cloud API.
 
-## Directory Structure
+## Package Architecture
 
 ```text
 packages/whatsapp-notifier/
@@ -24,7 +24,7 @@ packages/whatsapp-notifier/
 
 ## Installation
 
-Add the local package to your Laravel app's `composer.json`:
+Add the package dependency to your main application `composer.json`:
 
 ```json
 "repositories": [
@@ -38,7 +38,7 @@ Add the local package to your Laravel app's `composer.json`:
 }
 ```
 
-Then run:
+Run composer update and publish configuration:
 
 ```bash
 composer update your-company/whatsapp-notifier
@@ -47,7 +47,7 @@ php artisan vendor:publish --tag=whatsapp-config
 
 ## Environment Setup
 
-Set your Meta WhatsApp credentials in `.env`:
+Configure credentials in `.env`:
 
 ```env
 WHATSAPP_ACCESS_TOKEN=your_meta_access_token_here
@@ -55,51 +55,34 @@ WHATSAPP_PHONE_NUMBER_ID=your_phone_number_id_here
 WHATSAPP_API_VERSION=v20.0
 ```
 
-## Direct Usage
+## Quick Reference
 
-### Send Template Message
-
-```php
-use YourCompany\WhatsApp\WhatsAppClient;
-
-class OrderController extends Controller
-{
-    public function sendConfirmation(WhatsAppClient $wa)
-    {
-        $wa->sendTemplate(
-            to: '94771234567',
-            templateName: 'order_update',
-            languageCode: 'en_US',
-            components: [
-                [
-                    'type' => 'body',
-                    'parameters' => [
-                        ['type' => 'text', 'text' => '#ORD-9921']
-                    ]
-                ]
-            ]
-        );
-    }
-}
-```
-
-### Send Text Message
+### Direct API Usage
 
 ```php
 use YourCompany\WhatsApp\WhatsAppClient;
 
 $wa = app(WhatsAppClient::class);
-$wa->sendText('94771234567', 'Hello from Laravel WhatsApp Notifier!');
+
+// Text Message
+$wa->sendText('94771234567', 'Hello from WhatsApp Notifier!');
+
+// Template Message
+$wa->sendTemplate(
+    to: '94771234567',
+    templateName: 'hello_world',
+    languageCode: 'en_US'
+);
 ```
 
-## Laravel Notification Channel Usage
+### Notification Channel Usage
 
 ```php
 use Illuminate\Notifications\Notification;
 use YourCompany\WhatsApp\Channels\WhatsAppChannel;
 use YourCompany\WhatsApp\Messages\WhatsAppTemplateMessage;
 
-class OrderShippedNotification extends Notification
+class OrderNotification extends Notification
 {
     public function via($notifiable): array
     {
@@ -108,9 +91,16 @@ class OrderShippedNotification extends Notification
 
     public function toWhatsApp($notifiable)
     {
-        return WhatsAppTemplateMessage::create('order_shipped')
-            ->language('en_US')
-            ->bodyParameters(['ORD-9921']);
+        return WhatsAppTemplateMessage::create('hello_world')
+            ->language('en_US');
     }
 }
+```
+
+## Testing
+
+Run package tests:
+
+```bash
+php artisan test --filter=WhatsAppPackageTest
 ```

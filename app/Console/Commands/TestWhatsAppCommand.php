@@ -13,7 +13,12 @@ class TestWhatsAppCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'whatsapp:test {phone : Target phone number with country code (e.g. 94771234567)} {--type=template : Message type (template or text)}';
+    protected $signature = 'whatsapp:test 
+                            {phone : Target phone number with country code (e.g. 94771234567)} 
+                            {--type=template : Message type (template or text)} 
+                            {--template=hello_world : Template name} 
+                            {--params= : Comma-separated body parameters} 
+                            {--lang=en_US : Language code}';
 
     /**
      * The console command description.
@@ -36,10 +41,24 @@ class TestWhatsAppCommand extends Command
             if ($type === 'text') {
                 $response = $wa->sendText($phone, 'Hello from WhatsApp Notifier Laravel Package!');
             } else {
+                $templateName = $this->option('template');
+                $lang = $this->option('lang');
+                $rawParams = $this->option('params');
+
+                $components = [];
+                if ($rawParams !== null && $rawParams !== '') {
+                    $paramList = array_map('trim', explode(',', $rawParams));
+                    $components[] = [
+                        'type' => 'body',
+                        'parameters' => array_map(fn($p) => ['type' => 'text', 'text' => $p], $paramList),
+                    ];
+                }
+
                 $response = $wa->sendTemplate(
                     to: $phone,
-                    templateName: 'hello_world',
-                    languageCode: 'en_US'
+                    templateName: $templateName,
+                    languageCode: $lang,
+                    components: $components
                 );
             }
 
